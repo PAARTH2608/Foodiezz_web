@@ -2,14 +2,11 @@ import classes from './AvailableMeals.module.css';
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import { useEffect, useState } from 'react';
-// we cannot use async func as a function in useEffect rather we created another func inside the use effect func which can be made async
 const AvailableMeals = () => {
     const [meals, setMeals] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [httpError, setHttpError] = useState()
-    // getting DUMMY_MEALS from backend.
     useEffect(() => {
-        // loader.
         const fetchMeals = async () => {
             const response = await fetch('https://react-http-f5ae6-default-rtdb.firebaseio.com/meals.json');
             if(!response.ok){
