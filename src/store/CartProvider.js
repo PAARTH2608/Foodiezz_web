@@ -20,7 +20,7 @@ const cartReducer = (state, action) => {
             };
             updatedItems = [...state.items];
             updatedItems[existingCartItemIndex] = updatedItem;
-        }// we are searching for the repeated item and stored its index and search for it in state(existing cart)
+        }
         else{
             updatedItems = state.items.concat(action.item);
         }
@@ -50,6 +50,9 @@ const cartReducer = (state, action) => {
             totalAmount: updatedTotalAmount
         }
     }
+    if(action.type === 'CLEAR'){
+        return defaultReducer;
+    }
     return defaultReducer;
 }
 const CartProvider = props => {
@@ -62,12 +65,16 @@ const CartProvider = props => {
     const removeItemFromCartHandler = id => {
         dispatchCartAction({type: 'REMOVE', id: id})
     };
+    const clearCartHandler = () => {
+        dispatchCartAction({type: 'CLEAR'})
+    }
     const cartContext = {
         // items: [],
         items: cartState.items,
         totalAmount: cartState.totalAmount,
         addItem: addItemToCartHandler,
-        removeItem: removeItemFromCartHandler
+        removeItem: removeItemFromCartHandler,
+        clearCart: clearCartHandler
     }
     return <CartContext.Provider value={cartContext}>
         {props.children}
